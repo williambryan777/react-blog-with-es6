@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import ShortBlog from './ShortBlog'
 import ImageList from './ImageList'
 import LongBlog from './LongBlog'
+import BlogButton from './BlogButton'
 class Blog extends Component {
     static propTypes = {
         blog: React.PropTypes.object
@@ -13,7 +14,10 @@ class Blog extends Component {
             originalId: this.props.blog.MicroBlog.OriginalId,
             isTop: this.props.blog.IsTop,
             imgUrlList: this.props.blog.ImgUrlList,
-            originalBlog: this.props.blog.OriginalBlog
+            originalBlog: this.props.blog.OriginalBlog,
+            IsPraise: this.props.blog.IsPraise,
+            IsFavorites: this.props.blog.IsFavorites,
+            ReportTimeStr: this.props.blog.ReportTimeStr
         }
     }
     render() {
@@ -22,16 +26,23 @@ class Blog extends Component {
         let blogBody = this.props.blog.MicroBlog.BlogBody;
         let imgUrlList = this.state.imgUrlList;//图像列表
         let originalBlog = this.state.originalBlog;
+        
         if (originalBlog == null || this.state.originalId == 0) {//原创的微博
             if(longBlogId<=0){//短微博
                 return (
                     <div>
                         <ShortBlog  isTop={this.state.isTop} longBlogId={longBlogId} blogBody={blogBody} />
                         <ImageList imgUrlList={imgUrlList} longBlogId={longBlogId}/>
+                        <BlogButton Id={this.state.microBlog.Id} IsFavorites={this.state.IsFavorites} IsPraise={this.state.IsPraise} ForwardedCount={this.state.microBlog.ForwardedCount} ReplyCount={this.state.microBlog.ReplyCount} PraiseCount={this.state.microBlog.PraiseCount} ReportTimeStr={this.state.ReportTimeStr} />
                     </div>
                     )
             }else{//长微博
-                return (<LongBlog initlongBlog={this.state.microBlog}/>)
+                return (
+                    <div>
+                        <LongBlog initlongBlog={this.state.microBlog} />
+                        <BlogButton Id={this.state.microBlog.Id} IsFavorites={this.state.IsFavorites} IsPraise={this.state.IsPraise} ForwardedCount={this.state.microBlog.ForwardedCount} ReplyCount={this.state.microBlog.ReplyCount} PraiseCount={this.state.microBlog.PraiseCount} ReportTimeStr={this.state.ReportTimeStr} />
+                    </div>
+                    )
             }
         }else{//转发的微博
             let cssZD=this.state.isTop ? 'webo_zd819':'';
@@ -58,6 +69,7 @@ class Blog extends Component {
                                 <ImageList imgUrlList={original_imgUrlList} longBlogId={original_longblogId} />
                             </div>
                         </div>
+                        <BlogButton Id={this.state.microBlog.Id} IsFavorites={this.state.IsFavorites} IsPraise={this.state.IsPraise} ForwardedCount={this.state.microBlog.ForwardedCount} ReplyCount={this.state.microBlog.ReplyCount} PraiseCount={this.state.microBlog.PraiseCount} ReportTimeStr={this.state.ReportTimeStr} />
                    </div>
                 )
             } else {//长微博
@@ -72,6 +84,7 @@ class Blog extends Component {
                             </p>
                             <LongBlog initlongBlog={originalBlog.MicroBlog} />
                         </div>
+                        <BlogButton Id={this.state.microBlog.Id} IsFavorites={this.state.IsFavorites} IsPraise={this.state.IsPraise} ForwardedCount={this.state.microBlog.ForwardedCount} ReplyCount={this.state.microBlog.ReplyCount} PraiseCount={this.state.microBlog.PraiseCount} ReportTimeStr={this.state.ReportTimeStr} />
                     </div>
                 )
             }
