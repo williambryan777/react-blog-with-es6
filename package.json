@@ -1,0 +1,49 @@
+{
+  "name": "react-hot-boilerplate",
+  "version": "1.0.0",
+  "description": "Boilerplate for ReactJS project with hot code reloading",
+  "scripts": {
+    "start": "node server.js",
+    "lint": "eslint src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/williambryan777/react-blog-with-es6.git"
+  },
+  "keywords": [
+    "react",
+    "reactjs",
+    "boilerplate",
+    "hot",
+    "reload",
+    "hmr",
+    "live",
+    "edit",
+    "webpack"
+  ],
+  "author": "EF MichaelYoung <yangenfeng1616@gmail.com> (https://github.com/williambryan777)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/williambryan777/react-blog-with-es6/issues"
+  },
+  "homepage": "https://github.com/williambryan777/react-blog-with-es6",
+  "devDependencies": {
+    "babel-core": "^6.0.20",
+    "babel-eslint": "^4.1.3",
+    "babel-loader": "^6.0.1",
+    "babel-preset-es2015": "^6.0.15",
+    "babel-preset-react": "^6.0.15",
+    "babel-preset-stage-0": "^6.0.15",
+    "eslint": "^1.10.3",
+    "eslint-plugin-react": "^3.6.2",
+    "react-hot-loader": "^1.3.0",
+    "webpack": "^1.12.2",
+    "webpack-dev-server": "^1.12.1"
+  },
+  "dependencies": {
+    "jquery": "^1.9.1",
+    "react": "^0.14.6",
+    "react-dom": "^0.14.6",
+    "react-medium-image-zoom": "^0.5.1"
+  }
+}
