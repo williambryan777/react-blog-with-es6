@@ -21,7 +21,7 @@ class  UserDetail extends Component {
                 {(() => {
                     if (accountRole== 1){
                         return (<span style={{ verticalAlign: 'middle', marginLeft: '1px' }}>
-                            <img src="/Themes/DefaultClean/images/certification.png" width="48" height="20" />
+                            <img src="http://www.followme.com/Themes/DefaultClean/images/certification.png" width="48" height="20" />
                         </span>)
                     } else if (accountRole == 2){
                         return (

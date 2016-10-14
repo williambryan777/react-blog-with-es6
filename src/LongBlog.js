@@ -21,7 +21,7 @@ class LongBlog extends Component {
     }
 
     getBlogDetail(){
-        return '/Social/BlogDetail/Index/' + this.state.id
+        return 'http://www.followme.com/Social/BlogDetail/Index/' + this.state.id
     }
 
     render () {
@@ -40,7 +40,7 @@ class LongBlog extends Component {
                         if (this.state.longBlogImg != null) {//有图片
                             return (<img src={this.state.longBlogImg} className="left_msgimg" width="80" height="80" alt="followme" />)
                         } else {//没有图片的话给一个默认的图片
-                            return (<img src="/Themes/DefaultClean/images/cwb_default_img.jpg" className="left_msgimg" width="80" height="80" alt="" />)
+                            return (<img src="http://www.followme.com/Themes/DefaultClean/images/cwb_default_img.jpg" className="left_msgimg" width="80" height="80" alt="" />)
                         }
                         })()}
                      </a>
@@ -50,7 +50,7 @@ class LongBlog extends Component {
                         </h3>
                         <p className="jstxt" dangerouslySetInnerHTML={{ __html: this.state.longBlogIntro }}></p>
                     </div>
-                    <a href={'http://www.followme.com/Social/BlogDetail/LongBlogDetail'+this.state.id}  target='_blank' className="readallbtn" id={'js_readallbtn' + this.state.id}>阅读</a>
+                    <a href={this.getBlogDetail()} target='_blank' className="readallbtn" id={'js_readallbtn' + this.state.id}>阅读</a>
                 </div>
             </div>
         )
