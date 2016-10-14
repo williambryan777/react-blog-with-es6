@@ -18,6 +18,9 @@
     "reload",
     "hmr",
     "live",
+    "weibo",
+    "微博",
+    "blog",
     "edit",
     "webpack"
   ],
