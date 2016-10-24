@@ -24,9 +24,9 @@ class Blog extends Component {
 
         let longBlogId = this.props.blog.MicroBlog.longBlogId;
         let blogBody = this.props.blog.MicroBlog.BlogBody;
-        let imgUrlList = this.state.imgUrlList;//图像列表
+        let imgUrlList = this.props.blog.ImgUrlList;
         let originalBlog = this.state.originalBlog;
-        
+
         if (originalBlog == null || this.state.originalId == 0) {//原创的微博
             if(longBlogId<=0){//短微博
                 return (
