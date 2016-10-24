@@ -29,7 +29,7 @@ class BlogButton extends Component {
             $('#commit-box-' + bid).slideUp();
             return false;
         }
-        $('.interact_tabcont_box').not('#commit-box-' + bid).hide();
+        $('.interact_tabcont').not('#commit-box-' + bid).hide();
         $('#commit-box-' + bid).slideDown();
     }
     render() {
