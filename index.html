@@ -10,18 +10,72 @@
 </head>
 
 <body>
-	<div id='root'>
+	<div class="community_wrap" ng-modules="BlogModule,ModuleTodayAttention">
+		<div class="community_topbar">
+			<div class="page-width">
+				<div class="searchbar clearfix">
+					<div class="searchinputbox">
+						<input type="text" id="txtSearch" maxlength='20' ng-model="searchWord" ng-keypress='search($event)' placeholder="大家正在搜：今日黄金">
+					</div>
+					<a href="javascript:;" class="searchbtn"><i></i></a>
+				</div>
+				<div class="tablinkbox">
+					<ul class="tablinklist clearfix">
+
+						<li class="active"><a href="#">社区</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<div class="community_main_wrap pt20 pb20">
+			<div class="page-width">
+				<div class="community_main clearfix">
+					<div class="left_main">
+						<div class="pbl-shadow-box">
+							<div class="weibo_wrap " ng-controller="MicroBlogCtrl">
+								<div class="time_tab">
+									<ul class="time_list clearfix">
+										<li id="tab24" class='active'>
+											<a href="javascript:void(0)" >24小时热门微博</a>
+										</li>
+										<li id="tab48">
+											<a href="javascript:void(0)">48小时热门微博</a>
+										</li>
+									</ul>
+								</div>
+								<div id='root'>
+								</div>
+								<div class="turn-page" id="pagerA">
+									<a href="/0" class="prev">上一页</a>
+									<a href="/1">1</a>
+									<a href="/2">2</a>
+									<a href="/3" class="current">3</a>
+									<a class="wuxian">...</a>
+									<a href="/365">365</a>
+									<a href="/2" class="next">下一页</a>
+								</div>
+							</div>
+
+						</div>
+					</div>
+					<!--社交右边栏-->
+					<div class="sidebox">
+					</div>
+					<!-- sidebox END-->
+				</div>
+			</div>
+		</div>
+
 	</div>
+
+
+	<script src="/Scripts/jquery.js"></script>
+	
 	<script src="/static/bundle.js"></script>
-	<div class="turn-page" id="pagerA">
-    <a href="/0" class="prev">上一页</a>
-    <a href="/1">1</a>
-    <a href="/2">2</a>
-		<a href="/3" class="current">3</a>
-    <a class="wuxian">...</a>
-    <a href="/365">365</a>
-    <a href="/2" class="next">下一页</a>
-    </div>
+	<script src="/Scripts/jquery.pagination.js"></script>
+<script src="/Scripts/User/jquery.qqFace.js"></script>
+
 </body>
 
 </html>
