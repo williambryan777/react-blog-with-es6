@@ -7,12 +7,18 @@ class CommentList extends Component {
     }
     constructor(props){
         super(props);
-        this.state ={
-            itemList:this.props.itemList
-        }
+    }
+    
+    handlePraiseComment(id){//点赞
+        var count = this.refs['praiseCount'+id].innerText;
+        console.log(count);
+        // var oldValue = document.getElementById('CCount_' + id).innerText;
+        // document.getElementById('CCount_'+id).innerText=parseInt(oldValue)+1;
+        var oldValue = this.refs['praiseCount' + id].innerText;
+        this.refs['praiseCount' + id].innerText = parseInt(oldValue) + 1;
     }
     render() {
-        var commentItems = this.state.itemList.map((itemComment, i)=>{//评论列表项
+        let commentItems = this.props.itemList.map((itemComment, i)=>{//评论列表项
             let replayContent;//回复标题栏
             let commentBody;//评论内容
             if (itemComment.Comment.ParentId > 0) {
@@ -24,7 +30,7 @@ class CommentList extends Component {
                 )
             }else{
                 replayContent = (
-                    <a href={'http://www.followme.com/UserPage/' + itemComment.Comment.UserId} className="ellipsis930 maxw930_134" title={itemComment.Comment.UserDisplayName} target="_blank" >{itemComment.Comment.UserDisplayName}</a>
+                    <a href={'http://www.followme.com/UserPage/' + itemComment.Comment.UserId}  className="ellipsis930 maxw930_134" title={itemComment.Comment.UserDisplayName} target="_blank" >{itemComment.Comment.UserDisplayName}</a>
                 )
 
                 commentBody = (
@@ -46,6 +52,14 @@ class CommentList extends Component {
                           {replayContent}
                         </p>
                         {commentBody}
+                        <div className="feed_list_options">
+                            <ul className="feed_list clearfix">
+                                <li >
+                                    <a onClick={this.handlePraiseComment.bind(this, itemComment.Comment.Id)} id="com_{{itemComment.Comment.Id}}" className="{itemComment.IsPraise ? 'handle handle-zan-c':'handle handle-zan-b'}" title={itemComment.IsPraise ? '取消赞' : '赞'} href="javascript:;" >赞(<span ref={'praiseCount' + itemComment.Comment.Id}   id={'CCount_' + itemComment.Comment.Id}>{itemComment.Comment.PraiseCount}</span>)</a>
+                                </li>
+                            </ul>
+                            <span>{itemComment.ReportTimeStr}</span>
+                        </div>
                     </div>
                 </li>
             )

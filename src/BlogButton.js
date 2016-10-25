@@ -87,8 +87,6 @@ class BlogButton extends Component {
                     </ul>
                     {ReportTimeStr}
                 </div>
-
-
                 {(() => {
                     if (this.state.isShow) {
                         return (<CommentBox id={this.props.Id} itemList={this.state.cList} rowCount={this.state.rowCount}  />)
