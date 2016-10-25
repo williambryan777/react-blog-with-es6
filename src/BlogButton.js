@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react';
-import CommentList from './CommentList'
+import CommentBox from './CommentBox'
 import $ from 'jquery'
 // var $ = require('jquery');
 class BlogButton extends Component {
@@ -71,7 +71,7 @@ class BlogButton extends Component {
 
                 {(() => {
                     if (this.state.isShow) {
-                        return (<CommentList id={this.props.Id} itemList={this.state.cList} />)
+                        return (<CommentBox id={this.props.Id} itemList={this.state.cList} />)
                     }
                 })()}
 

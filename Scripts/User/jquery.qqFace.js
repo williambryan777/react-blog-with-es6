@@ -1,5 +1,5 @@
 // QQ表情插件
-(function(QQ){  
+(function (Emotion){  
 	$.fn.qqFace = function(options){
 		var defaults = {
 			id : 'facebox',

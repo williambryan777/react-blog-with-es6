@@ -1,8 +1,8 @@
 import React, {Component, PropTypes} from 'react';
 import $ from 'jquery';
-import QQ from '../Scripts/User/jquery.qqFace';
+import Emotion from '../Scripts/User/jquery.qqFace';
 
-class CommentList extends Component {
+class CommentBox extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -14,14 +14,8 @@ class CommentList extends Component {
         id: React.PropTypes.number.isRequired,//微博的id
         itemList: React.PropTypes.array//评论列表
     };
-
-    handleFace(){
-       
-
-     }
-
      componentDidMount() {
-        QQ(".p123").qqFace({
+         Emotion(".p123").qqFace({
             id: 'facebox', //表情盒子的ID
             assign: '', //给那个控件赋值
             path: 'face/' //表情存放的路径
@@ -43,7 +37,7 @@ class CommentList extends Component {
                                   <ul className='rp_tool_list clearfix' style={{'position':'relative'}}>
                                     <a href="javascript:void(0)" className="weibo_rpbtn" onClick={this.handleAddComment}>评论</a>
                                     <li data-id={this.props.id}>
-                                        <a style={{'cursor':'pointer'}} data-id={'comment_txt_' + this.props.id} className="p123" onClick={this.handleFace.bind(this)}><em className="weibo-icon i-face"></em>表情</a>
+                                        <a style={{'cursor':'pointer'}} data-id={'comment_txt_' + this.props.id} className="p123" ><em className="weibo-icon i-face"></em>表情</a>
                                     </li>
                                     <li>
                                     <span>
@@ -67,6 +61,4 @@ class CommentList extends Component {
     }
 }
 
-
-
-export default CommentList;
+export default CommentBox;
