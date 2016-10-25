@@ -1,5 +1,5 @@
 // QQ表情插件
-(function($){  
+(function(QQ){  
 	$.fn.qqFace = function(options){
 		var defaults = {
 			id : 'facebox',
@@ -44,21 +44,19 @@
 				}
 			    strFace += '</tr></table></div>' + imgPositionDown + '</div>';
 			}
-				/*strFace = '<div id="'+id+'" style="position:absolute;display:none;z-index:1000;background-color:white;padding:10px;border:1px solid #ccc" class="qqFace">' +
-							  '<table border="1" style="border:1px solid #ccc" cellspacing="0" cellpadding="0"><tr>';
-				for(var i=1; i<=75; i++){
-					labFace = '['+tip+i+']';
-					strFace += '<td><img src="'+path+i+'.gif" onclick="$(\'#'+option.assign+assign_id+'\').insertAtCaret(\'' + labFace + '\');" /></td>';
-					if( i % 15 == 0 ) strFace += '</tr><tr>';
-				}
-				strFace += '</tr></table></div>';
-			}*/
-			if ($.browser.webkit) {
-			    $(".facebox-box-content").css('width', '387px');
-			   // $(".facebox-p-t1").css('height', '136px');
-			} else {
-			    $(".facebox-box-content").css('width', '395px');
-			    $(".facebox-p-t1").css('height', '140px');
+			// if ($.browser && $.browser.webkit) {
+			//     $(".facebox-box-content").css('width', '387px');
+			//    // $(".facebox-p-t1").css('height', '136px');
+			// } else {
+			//     $(".facebox-box-content").css('width', '395px');
+			//     $(".facebox-p-t1").css('height', '140px');
+			// }
+
+			if ($.support.leadingWhitespace) {
+				$(".facebox-box-content").css('width', '387px');
+			}else{
+				$(".facebox-box-content").css('width', '395px');
+				$(".facebox-p-t1").css('height', '140px');
 			}
 			$(this).parent().append(strFace);
 			var offset = $(this).position();
@@ -73,89 +71,101 @@
 			$("div[id*='i-user-box']").hide();
 			$("div[id*='hot-user-box']").hide();
 			e.stopPropagation();
-			var nicesx = $(".nui-scroll").niceScroll({ touchbehavior: false, cursorcolor: "#a3a6af", cursoropacitymax: 0.6, cursorwidth: 8, horizrailenabled: false });
+			// var nicesx = $(".nui-scroll").niceScroll({ touchbehavior: false, cursorcolor: "#a3a6af", cursoropacitymax: 0.6, cursorwidth: 8, horizrailenabled: false });
+		    });
 		});
-});
 		$(document).click(function(){
 			$('#'+id).hide();
 			$('#'+id).remove();
 		});
 	};
-})(jQuery);
 
-jQuery.extend({ 
-unselectContents: function(){ 
-	if(window.getSelection) 
-		window.getSelection().removeAllRanges(); 
-	else if(document.selection) 
-		document.selection.empty(); 
-	} 
-}); 
-jQuery.fn.extend({ 
-	selectContents: function(){ 
-		$(this).each(function(i){ 
-			var node = this; 
-			var selection, range, doc, win; 
-			if ((doc = node.ownerDocument) && (win = doc.defaultView) && typeof win.getSelection != 'undefined' && typeof doc.createRange != 'undefined' && (selection = window.getSelection()) && typeof selection.removeAllRanges != 'undefined'){ 
-				range = doc.createRange(); 
-				range.selectNode(node); 
-				if(i == 0){ 
-					selection.removeAllRanges(); 
-				} 
-				selection.addRange(range); 
-			} else if (document.body && typeof document.body.createTextRange != 'undefined' && (range = document.body.createTextRange())){ 
-				range.moveToElementText(node); 
-				range.select(); 
-			} 
-		}); 
-	}, 
-
-	setCaret: function(){ 
-		if(!$.browser.msie) return; 
-		var initSetCaret = function(){ 
-			var textObj = $(this).get(0); 
-			textObj.caretPos = document.selection.createRange().duplicate(); 
-		}; 
-		$(this).click(initSetCaret).select(initSetCaret).keyup(initSetCaret); 
-	}, 
-
-	insertAtCaret: function (textFeildValue) {
-	    var textObj = $(this).get(0);
-	  
-	    if ($(textObj).val().length + textFeildValue.length > 140) {
-	        return;
-	    }
-		var text = '';
-		if (document.all && textObj.createTextRange && textObj.caretPos) {
-			var caretPos=textObj.caretPos; 
-			caretPos.text = caretPos.text.charAt(caretPos.text.length-1) == '' ? 
-			textFeildValue+'' : textFeildValue;
-		} else if (textObj.setSelectionRange) {
-		    if ($.browser.version === '9.0') {
-		        rangeStart = textObj.value.length;
-		        rangeEnd = textObj.value.length;
-		    } else {
-		        rangeStart = textObj.selectionStart;
-		        rangeEnd = textObj.selectionEnd;
-		    }
-			var tempStr1=textObj.value.substring(0,rangeStart); 
-			var tempStr2=textObj.value.substring(rangeEnd); 
-			textObj.value=tempStr1+textFeildValue+tempStr2; 
-			textObj.focus(); 
-			var len = textFeildValue.length;
-			textObj.setSelectionRange(rangeStart + len, rangeStart + len);
-			//textObj.blur(); 
-		}else{
-		    //$(textObj) 
-		    text = textFeildValue;
-			//text = text.replace(/\</g,'&lt;');
-			//text = text.replace(/\>/g,'&gt;');
-			//text = text.replace(/\n/g,'<br/>');
-			//text = text.replace(/\[em_([0-9]*)\]/g, '<img src="/Scripts/User/face/$1.gif" border="0" />');
-			$(textObj).append(text);
+	jQuery.extend({
+		unselectContents: function () {
+			if (window.getSelection)
+				window.getSelection().removeAllRanges();
+			else if (document.selection)
+				document.selection.empty();
 		}
+	});
+	jQuery.fn.extend({
+		selectContents: function () {
+			$(this).each(function (i) {
+				var node = this;
+				var selection, range, doc, win;
+				if ((doc = node.ownerDocument) && (win = doc.defaultView) && typeof win.getSelection != 'undefined' && typeof doc.createRange != 'undefined' && (selection = window.getSelection()) && typeof selection.removeAllRanges != 'undefined') {
+					range = doc.createRange();
+					range.selectNode(node);
+					if (i == 0) {
+						selection.removeAllRanges();
+					}
+					selection.addRange(range);
+				} else if (document.body && typeof document.body.createTextRange != 'undefined' && (range = document.body.createTextRange())) {
+					range.moveToElementText(node);
+					range.select();
+				}
+			});
+		},
 
-        //供Angular模型数据双向绑定更新使用
-		$(textObj).triggerHandler('change');
-	} 
-});
+		setCaret: function () {
+			if (!$.browser.msie) return;
+			var initSetCaret = function () {
+				var textObj = $(this).get(0);
+				textObj.caretPos = document.selection.createRange().duplicate();
+			};
+			$(this).click(initSetCaret).select(initSetCaret).keyup(initSetCaret);
+		},
+
+		insertAtCaret: function (textFeildValue) {
+			var textObj = $(this).get(0);
+
+			if ($(textObj).val().length + textFeildValue.length > 140) {
+				return;
+			}
+			var text = '';
+			if (document.all && textObj.createTextRange && textObj.caretPos) {
+				var caretPos = textObj.caretPos;
+				caretPos.text = caretPos.text.charAt(caretPos.text.length - 1) == '' ?
+					textFeildValue + '' : textFeildValue;
+			} else if (textObj.setSelectionRange) {
+				if ($.support.leadingWhitespace) {//高级浏览器
+					rangeStart = textObj.value.length;
+					rangeEnd = textObj.value.length;
+				} else {
+					rangeStart = textObj.selectionStart;
+					rangeEnd = textObj.selectionEnd;
+				}
+				// if ($.browser.version === '9.0') {
+				// 	rangeStart = textObj.value.length;
+				// 	rangeEnd = textObj.value.length;
+				// } else {
+				// 	rangeStart = textObj.selectionStart;
+				// 	rangeEnd = textObj.selectionEnd;
+				// }
+				var tempStr1 = textObj.value.substring(0, rangeStart);
+				var tempStr2 = textObj.value.substring(rangeEnd);
+				textObj.value = tempStr1 + textFeildValue + tempStr2;
+				textObj.focus();
+				var len = textFeildValue.length;
+				textObj.setSelectionRange(rangeStart + len, rangeStart + len);
+				//textObj.blur(); 
+			} else {
+				//$(textObj) 
+				text = textFeildValue;
+				//text = text.replace(/\</g,'&lt;');
+				//text = text.replace(/\>/g,'&gt;');
+				//text = text.replace(/\n/g,'<br/>');
+				//text = text.replace(/\[em_([0-9]*)\]/g, '<img src="/Scripts/User/face/$1.gif" border="0" />');
+				$(textObj).append(text);
+			}
+
+			//供Angular模型数据双向绑定更新使用
+			$(textObj).triggerHandler('change');
+		}
+	});
+
+})($);
+
+module.exports=$;
+
+

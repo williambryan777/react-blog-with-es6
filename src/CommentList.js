@@ -1,5 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import $ from 'jquery';
+import QQ from '../Scripts/User/jquery.qqFace';
 
 class CommentList extends Component {
     constructor(props) {
@@ -16,15 +17,16 @@ class CommentList extends Component {
 
     handleFace(){
        
-    $(".p123").qqFace({
+
+     }
+
+     componentDidMount() {
+        QQ(".p123").qqFace({
             id: 'facebox', //表情盒子的ID
             assign: '', //给那个控件赋值
             path: 'face/' //表情存放的路径
-            });
+        })
      }
-
-
-
     render() {
         return (
            <div className="interact_tabcont_box" style={{ display: 'block' }}>
