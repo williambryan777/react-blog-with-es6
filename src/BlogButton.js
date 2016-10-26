@@ -39,7 +39,7 @@ class BlogButton extends Component {
     handlePageComment(page){
         page++;
         $.getJSON('/data/comments.json',
-            { id: this.props.Id, pageIndex: this.state.pageIndex, pageSize: this.state.pageSize },
+            { id: this.props.Id, pageIndex: page, pageSize: this.state.pageSize },
             function (data) {
                 this.setState({
                     rowCount: data.RowCount,

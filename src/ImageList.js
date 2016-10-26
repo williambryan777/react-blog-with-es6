@@ -32,7 +32,6 @@ class ImageList extends Component {
                                                src: imgUrl.replace('w=80&h=80&centerCut=1', 'w=650&h=400&centerCut=0')
                                           }}
                                           />
-  
                                    </li>
                                )
                             })

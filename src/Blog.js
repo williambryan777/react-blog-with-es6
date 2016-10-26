@@ -27,20 +27,23 @@ class Blog extends Component {
         let imgUrlList = this.props.blog.ImgUrlList;
         let originalBlog = this.state.originalBlog;
 
+        let blogButtonContent = (
+            <BlogButton Id={this.state.microBlog.Id} IsFavorites={this.state.IsFavorites} IsPraise={this.state.IsPraise} ForwardedCount={this.state.microBlog.ForwardedCount} ReplyCount={this.state.microBlog.ReplyCount} PraiseCount={this.state.microBlog.PraiseCount} ReportTimeStr={this.state.ReportTimeStr} />
+        )
         if (originalBlog == null || this.state.originalId == 0) {//原创的微博
             if(longBlogId<=0){//短微博
                 return (
                     <div>
                         <ShortBlog  isTop={this.state.isTop} longBlogId={longBlogId} blogBody={blogBody} />
                         <ImageList imgUrlList={imgUrlList} longBlogId={longBlogId}/>
-                        <BlogButton Id={this.state.microBlog.Id} IsFavorites={this.state.IsFavorites} IsPraise={this.state.IsPraise} ForwardedCount={this.state.microBlog.ForwardedCount} ReplyCount={this.state.microBlog.ReplyCount} PraiseCount={this.state.microBlog.PraiseCount} ReportTimeStr={this.state.ReportTimeStr} />
+                        {blogButtonContent}
                     </div>
                     )
             }else{//长微博
                 return (
                     <div>
                         <LongBlog initlongBlog={this.state.microBlog} />
-                        <BlogButton Id={this.state.microBlog.Id} IsFavorites={this.state.IsFavorites} IsPraise={this.state.IsPraise} ForwardedCount={this.state.microBlog.ForwardedCount} ReplyCount={this.state.microBlog.ReplyCount} PraiseCount={this.state.microBlog.PraiseCount} ReportTimeStr={this.state.ReportTimeStr} />
+                        {blogButtonContent}
                     </div>
                     )
             }
@@ -69,7 +72,7 @@ class Blog extends Component {
                                 <ImageList imgUrlList={original_imgUrlList} longBlogId={original_longblogId} />
                             </div>
                         </div>
-                        <BlogButton Id={this.state.microBlog.Id} IsFavorites={this.state.IsFavorites} IsPraise={this.state.IsPraise} ForwardedCount={this.state.microBlog.ForwardedCount} ReplyCount={this.state.microBlog.ReplyCount} PraiseCount={this.state.microBlog.PraiseCount} ReportTimeStr={this.state.ReportTimeStr} />
+                         {blogButtonContent}
                    </div>
                 )
             } else {//长微博
@@ -84,7 +87,7 @@ class Blog extends Component {
                             </p>
                             <LongBlog initlongBlog={originalBlog.MicroBlog} />
                         </div>
-                        <BlogButton Id={this.state.microBlog.Id} IsFavorites={this.state.IsFavorites} IsPraise={this.state.IsPraise} ForwardedCount={this.state.microBlog.ForwardedCount} ReplyCount={this.state.microBlog.ReplyCount} PraiseCount={this.state.microBlog.PraiseCount} ReportTimeStr={this.state.ReportTimeStr} />
+                        {blogButtonContent}
                     </div>
                 )
             }

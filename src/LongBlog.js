@@ -27,7 +27,12 @@ class LongBlog extends Component {
     render () {
         let classZD = this.state.isTop ? 'webo_zd819' : '';
         let cssClass = `weibo_content ${classZD}`;
-        
+        let imgContent;
+        if (this.state.longBlogImg != null) {//有图片
+            imgContent = (<img src={this.state.longBlogImg} className="left_msgimg" width="80" height="80" alt="followme" />)
+        } else {//没有图片的话给一个默认的图片
+            imgContent =  (<img src="http://www.followme.com/Themes/DefaultClean/images/cwb_default_img.jpg" className="left_msgimg" width="80" height="80" alt="" />)
+        }
         return (
             <div>
                 <div  className={cssClass} >
@@ -36,13 +41,7 @@ class LongBlog extends Component {
                 <div className="cwb_mediasmallBox" style={{
                     display: 'block'}}>
                     <a  href={this.getBlogDetail()} target="_blank">
-                        {(()=>{
-                        if (this.state.longBlogImg != null) {//有图片
-                            return (<img src={this.state.longBlogImg} className="left_msgimg" width="80" height="80" alt="followme" />)
-                        } else {//没有图片的话给一个默认的图片
-                            return (<img src="http://www.followme.com/Themes/DefaultClean/images/cwb_default_img.jpg" className="left_msgimg" width="80" height="80" alt="" />)
-                        }
-                        })()}
+                      {imgContent}
                      </a>
                     <div className="right_txtintrobox">
                         <h3 className="title">
