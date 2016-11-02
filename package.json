@@ -45,6 +45,7 @@
   },
   "dependencies": {
     "jquery": "^1.9.1",
+    "moment": "^2.15.2",
     "react": "^0.14.6",
     "react-dom": "^0.14.6",
     "react-medium-image-zoom": "^0.5.1"

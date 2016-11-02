@@ -1,14 +1,18 @@
 ﻿/**
  *  头像
  */
-
-
-import React, {Component} from 'react'
-
-class Avatar extends Component {
-	static propTypes={
+import React, { Component } from 'react'
+import { API_ROOT } from './config'
+export default class Avatar extends Component {
+	static propTypes = {
 		userId: React.PropTypes.number.isRequired
 	};
+	getAvataUrl() {
+		return API_ROOT + '/Avata/' + this.props.userId;
+	}
+	getUserPageUrl() {
+		return API_ROOT + '/UserPage/' + this.props.userId;
+	}
 	render() {
 		return (
 			<div className='userimgbox'>
@@ -19,13 +23,7 @@ class Avatar extends Component {
 
 		);
 	}
-	getAvataUrl() {//获取头像地址
-		return 'http://www.followme.com/Avata/' + this.props.userId;
-	}
-	getUserPageUrl() {//获取主页面
-		return 'http://www.followme.com/UserPage/' + this.props.userId;
-	}
-}
 
-export default Avatar
+};
+
 

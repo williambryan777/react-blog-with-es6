@@ -1,21 +1,25 @@
 /**
  * 短微博
  */
-import  React,{Component} from 'react';
-class  ShortBlog extends Component{
-    static propTypes={
+import React, { Component } from 'react'
+export default class ShortBlog extends Component {
+    static propTypes = {
         isTop: React.PropTypes.bool,
         blogBody: React.PropTypes.string.isRequired
-    };
+    }
+    constructor(props) {
+        super(props)
+        this.state = {
+            isTop: this.props.isTop
+        }
+    }
     render() {
-        const {isTop,blogBody}=this.props;
+        const {isTop, blogBody} = this.props;
         let classZD = isTop ? 'webo_zd819' : '';
         let cssClass = `weibo_content ${classZD}`;
         return (
-            <div className={cssClass}   dangerouslySetInnerHTML={{ __html: blogBody }} >
+            <div className={cssClass} dangerouslySetInnerHTML={{ __html: blogBody }} >
             </div>
         );
     }
 }
-
-export default ShortBlog

@@ -1,42 +1,38 @@
 //关注某个人
 import React, { Component } from 'react'
-class Attention extends Component {
+export default class Attention extends Component {
     static propTypes = {
         isAttention: React.PropTypes.bool.isRequired,
         isOwnerBlog: React.PropTypes.bool.isRequired,
         userId: React.PropTypes.number.isRequired
-    };  
-
+    }
     constructor(props) {
-        super(props);
+        super(props)
         this.state = {
             isAttention: this.props.isAttention
-        };
+        }
     }
 
-    AttentionUser() {
-        var state=this.state.isAttention;
-        this.setState({ isAttention: !state });
+    handleAttentionUser() {//关注
+        let state = this.state.isAttention;
+        requiredLogin(() => $.post('/Social/Blog/AttentionOrNo', { id: this.props.userId }, () => {
+            this.setState({ isAttention: !state });
+            window.location.href = '/social';
+        }));
     }
 
     render() {
         if (!this.props.IsOwnerBlog) {
-            let setfollow = this.props.isAttention ? 'setfollow' : '';
+            let setfollow = !this.state.isAttention ? 'setfollow' : '';
             let cssClass = `normalFollowBtn btn ${setfollow} attr_${this.props.userId} `;//样式
             return (
                 <div className="btnbox">
-                    <a href="javascript:void(0);" className={cssClass} onClick={this.AttentionUser.bind(this)} title={this.state.isAttention ? '点击取消关注' : '点击添加关注'}>{this.state.isAttention ? '已关注' : '关注'}</a>
+                    <a href='javascript:void(0);' onClick={this.handleAttentionUser.bind(this)} className={cssClass} >{this.state.isAttention ? '已关注' : '关注'}</a>
                 </div>
             )
-        }else{
+        } else {
             return null;
         }
-      
 
     }
 }
-
-export default Attention
-
-
-

@@ -1,14 +1,14 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 import ShortBlog from './ShortBlog'
 import ImageList from './ImageList'
 import LongBlog from './LongBlog'
 import BlogButton from './BlogButton'
-class Blog extends Component {
+export default class Blog extends Component {
     static propTypes = {
         blog: React.PropTypes.object
-    };
+    }
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
             microBlog: this.props.blog.MicroBlog,
             originalId: this.props.blog.MicroBlog.OriginalId,
@@ -21,79 +21,80 @@ class Blog extends Component {
         }
     }
     render() {
-
         let longBlogId = this.props.blog.MicroBlog.longBlogId;
         let blogBody = this.props.blog.MicroBlog.BlogBody;
         let imgUrlList = this.props.blog.ImgUrlList;
         let originalBlog = this.state.originalBlog;
-
         let blogButtonContent = (
-            <BlogButton Id={this.state.microBlog.Id} IsFavorites={this.state.IsFavorites} IsPraise={this.state.IsPraise} ForwardedCount={this.state.microBlog.ForwardedCount} ReplyCount={this.state.microBlog.ReplyCount} PraiseCount={this.state.microBlog.PraiseCount} ReportTimeStr={this.state.ReportTimeStr} />
-        )
-        if (originalBlog == null || this.state.originalId == 0) {//原创的微博
-            if(longBlogId<=0){//短微博
-                return (
+            <BlogButton Id={this.state.microBlog
+                .Id} IsFavorites={this.state
+                    .IsFavorites} IsPraise={this.state
+                        .IsPraise} ForwardedCount={this.state.microBlog
+                            .ForwardedCount} ReplyCount={this.state.microBlog
+                                .ReplyCount} PraiseCount={this.state.microBlog
+                                    .PraiseCount} ReportTimeStr={this.state.ReportTimeStr} />
+        );
+
+
+        //转发部分
+        let cssZD = this.state.isTop ? 'webo_zd819' : '';
+        let cssClass = `weibo_content  ${cssZD} `;//样式
+        let forwardContent = (//转发发表的内容
+            <div className={cssClass} dangerouslySetInnerHTML={{ __html: blogBody }}></div>
+        );
+        let oLongBlogId, oLongBlogBody, oImgUrlList, userId, userDisplayName;
+        if (originalBlog) {
+            oLongBlogId = originalBlog.MicroBlog.longBlogId;//原微博
+            oLongBlogBody = originalBlog.MicroBlog.BlogBody;//原微博内容
+            oImgUrlList = originalBlog.ImgUrlList;//原微博内容
+            userId = originalBlog.MicroBlog.UserId;
+            userDisplayName = originalBlog.MicroBlog.UserDisplayName;
+        }
+        return (
+            do{
+            if (originalBlog == null || this.state.originalId == 0) {
+                if (longBlogId <= 0) {//短微博
                     <div>
-                        <ShortBlog  isTop={this.state.isTop} longBlogId={longBlogId} blogBody={blogBody} />
-                        <ImageList imgUrlList={imgUrlList} longBlogId={longBlogId}/>
+                        <ShortBlog isTop={this.state.isTop} longBlogId={longBlogId} blogBody={blogBody} />
+                        <ImageList imgUrlList={imgUrlList} longBlogId={longBlogId} />
                         {blogButtonContent}
                     </div>
-                    )
-            }else{//长微博
-                return (
+                } else {
                     <div>
                         <LongBlog initlongBlog={this.state.microBlog} />
                         {blogButtonContent}
                     </div>
-                    )
-            }
-        }else{//转发的微博
-            let cssZD=this.state.isTop ? 'webo_zd819':'';
-            let cssClass = `weibo_content  ${cssZD} `;//样式
-            let forwardContent=(//转发发表的内容
-                <div className={cssClass} dangerouslySetInnerHTML={{ __html: blogBody }} ></div>
-            )
-            let original_longblogId = originalBlog.MicroBlog.longBlogId;//原微博
-            let original_blogbody = originalBlog.MicroBlog.BlogBody;//原微博内容
-            let original_imgUrlList = originalBlog.ImgUrlList;//原微博内容
-            let userId = originalBlog.MicroBlog.UserId;
-            let userDisplayName = originalBlog.MicroBlog.UserDisplayName;
-            
-            if (original_longblogId <= 0) {//短微博
-                return (
-                   <div>
-                        {forwardContent}
-                        <div className="forward_cont_box">
-                            <p>
-                                <a href={'/UserPage/' + userId} target="_blank" className="color3 person-card" userid={userId}><strong style={{ color: '#ff6200'}}>@{userDisplayName}：</strong></a>
-                            </p>
+                }
+            } else {//转发的微博
+                <div>
+                    {forwardContent}
+                    <div className="forward_cont_box">
+                        <p>
+                            <a href={'/UserPage/' + userId} target="_blank" className="color3 person-card" userid={
+                                userId}><strong style={{ color: '#ff6200' }}>@{userDisplayName}：</strong></a>
+                        </p>
+                        {
+                                do{
+                                    if (oLongBlogId <= 0){
                             <div>
-                                <ShortBlog  blogBody={original_blogbody} />
-                                <ImageList imgUrlList={original_imgUrlList} longBlogId={original_longblogId} />
+                                <ShortBlog blogBody={oLongBlogBody} />
+                                <ImageList imgUrlList={oImgUrlList} longBlogId={oLongBlogId} />
                             </div>
-                        </div>
-                         {blogButtonContent}
-                   </div>
-                )
-            } else {//长微博
-                return (
-                    <div>
-                        {forwardContent}
-                        <div className="forward_cont_box">
-                            <p>
-                                <a href={'/UserPage/' + userId} target="_blank" className="color3 person-card" userid={userId}>
-                                  <strong style={{ color: '#ff6200' }}>@{userDisplayName}：</strong>
-                                </a>
-                            </p>
+                        }else{
                             <LongBlog initlongBlog={originalBlog.MicroBlog} />
+                        }
+                        }
+                            }
                         </div>
-                        {blogButtonContent}
-                    </div>
-                )
+                    {blogButtonContent}
+                </div>
+
             }
         }
+        )
 
     }
+
 }
 
-export default Blog
+
