@@ -15,10 +15,12 @@ export default class Attention extends Component {
 
     handleAttentionUser() {//关注
         let state = this.state.isAttention;
-        requiredLogin(() => $.post('/Social/Blog/AttentionOrNo', { id: this.props.userId }, () => {
-            this.setState({ isAttention: !state });
-            window.location.href = '/social';
-        }));
+        // requiredLogin(() => $.post('/Social/Blog/AttentionOrNo', { id: this.props.userId }, () => {
+        //     this.setState({ isAttention: !state });
+        //     window.location.href = '/social';
+        // }));
+
+          this.setState({ isAttention: !state });
     }
 
     render() {
