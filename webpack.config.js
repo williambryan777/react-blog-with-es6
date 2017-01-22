@@ -3,6 +3,9 @@ var webpack = require('webpack');
 
 module.exports = {
     devtool: 'eval',
+    colors: true,
+    inline: true,
+    progress: true,
     entry: [
         'webpack-dev-server/client?http://localhost:3000',
         'webpack/hot/only-dev-server',
