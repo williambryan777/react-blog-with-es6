@@ -22,15 +22,15 @@ module.exports = {
         })
     ],
     resolve: {
-      extensions: ['', '.js', '.jsx', '.scss', '.css']
+        extensions: ['', '.js', '.jsx', '.scss', '.css']
     },
     module: {
         loaders: [{
-                test: /\.js$/,
-                loaders: ['react-hot', 'babel'],
-                include: path.join(__dirname, 'src'),
-                exclude: /node_modules/
-            }
-        ]
+            test: /\.(jsx|js)?$/,
+            // loader: 'babel'
+            loaders: ['react-hot', 'babel'],
+            include: path.join(__dirname, 'src'),
+            exclude: /node_modules/
+        }]
     }
 };

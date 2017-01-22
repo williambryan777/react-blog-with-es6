@@ -1,6 +1,6 @@
 ﻿/*常量  BEGIN*/
 var TRADER_LIST_HANDLE_URL = "/Traders/Traderpage";
-var TRADER_INFO_HANDLE_URL = "";/*加载交易员基本信息*/
+var TRADER_INFO_HANDLE_URL = ""; /*加载交易员基本信息*/
 var USER_LOGIN_CALL_BACK = null;
 var USER_LOGIN_CALL_BACK_PARAM = null;
 var USER_LOGIN_CALL_BACK_ALLOW_CANCEL = null;
@@ -8,7 +8,9 @@ var Page_Common_Ajax_Error = "请求失败，请刷新页面后重试。";
 var USER_ASSOCIATE_OBJECT = null;
 var USER_ASSOCIATE_URL = "/Report/Member/GetMemberAssociate";
 var USER_GETASSOCIATE_URL = "/Social/Attention/GetAttAndFansCount";
-var REQUIRED_USER_ASSOCIATE = false;
+if (typeof(REQUIRED_USER_ASSOCIATE) == "undefined") {
+    var REQUIRED_USER_ASSOCIATE = false;
+}
 /*常量  END*/
 
 
@@ -17,12 +19,12 @@ function IsIntNumber(val) {
     return isNum.test(val);
 }
 
-String.prototype.trim = function () {
+String.prototype.trim = function() {
     return this.replace(/(^\s*)|(\s*$)/g, "");
 }
 
 // on document ready;
-$(document).ready(function () {
+$(document).ready(function() {
 
     //运营推广域名处理
     var fromAds = document.referrer;
@@ -34,39 +36,39 @@ $(document).ready(function () {
         }
     }
 
-
-    if ($(".nui-scroll").size() > 0)
-        var nicesx = $(".nui-scroll").niceScroll({ touchbehavior: false, cursorcolor: "#a3a6af", cursoropacitymax: 0.6, cursorwidth: 8, horizrailenabled: false });
+    //滚动条
+    //if ($(".nui-scroll").size() > 0) {
+    //    var nicesx = $(".nui-scroll").niceScroll({ touchbehavior: false, cursorcolor: "#a3a6af", cursoropacitymax: 0.6, cursorwidth: 8, horizrailenabled: false });
+    //};
     var sendUrl = '';
-    getLatestMessage();//消息提醒
+    getLatestMessage(); //消息提醒
     screening_click();
     initValidateCode();
     //initLogin();
     loadDateTimePicker();
     setInterval(getLatestMessage, 5000);
-    exChange();//tab切换
-    tableSort();//表格排序
-    commonSort();//排序
+    exChange(); //tab切换
+    tableSort(); //表格排序
+    commonSort(); //排序
     exshowHide();
     //首页我的账户下拉菜单
-    $(".inuser_xiala").each(function () {
+    $(".inuser_xiala").each(function() {
         $(this).mouseover(showUserMenu($(this), true)).mouseout(showUserMenu($(this), false));
     })
 
-    $("#login_title").mouseover(function () {
-        $(".inuser_xiala").each(function () {
+    $("#login_title").mouseover(function() {
+        $(".inuser_xiala").each(function() {
             if ($(this).attr("index") == USER_LOGIN_USER_TYPE) {
                 showUserMenu($(this), true);
             }
         });
-    }).mouseout(function () {
-        $(".inuser_xiala").each(function () {
+    }).mouseout(function() {
+        $(".inuser_xiala").each(function() {
             if ($(this).attr("index") == USER_LOGIN_USER_TYPE) {
                 showUserMenu($(this), false);
             }
         });
-    }
-    );
+    });
 
     //微博框默认值；
     //$("textarea[class='input-box']").attr('placeholder', '提示：平台禁止发布私人QQ、电话等联系方式；禁止发布广告、谣言等敏感信息，否则将屏蔽或禁用账户。');
@@ -78,26 +80,26 @@ $(document).ready(function () {
 
     //去除文本框两端的多余空格
     $("input[type='text']").blur(
-    function () {
-        var val = $(this).val();
-        if (val) {
-            $(this).val(val.replace(/(^\s*)|(\s*$)/g, ""));
+        function() {
+            var val = $(this).val();
+            if (val) {
+                $(this).val(val.replace(/(^\s*)|(\s*$)/g, ""));
+            }
         }
-    }
-   );
+    );
     //如果定义了autoPopLoginWindow=true 则自动弹出登录
     //if (autoPopLoginWindow != undefined && autoPopLoginWindow) {
     //    $("#box_login").show();
     //};
 
     //新闻类文章页面选择大字号
-    $("#largeSize").click(function () {
+    $("#largeSize").click(function() {
         $(".page_wen").addClass("font_wen_big");
         $("#largeSize").addClass("dq");
         $("#smallSize").removeClass("dq");
     });
     //新闻类文章页面选择小字号
-    $("#smallSize").click(function () {
+    $("#smallSize").click(function() {
         $(".page_wen").removeClass("font_wen_big");
         $("#largeSize").removeClass("dq");
         $("#smallSize").addClass("dq");
@@ -112,7 +114,7 @@ $(document).ready(function () {
     getUserAssociate();
 
     //头部导航搜索点击拉开输入框
-    $("#search-ico").click(function () {
+    $("#search-ico").click(function() {
         if ($("#search_form").find('input').val() === '') {
             $(this).parent().css({ backgroundColor: 'white' });
             $(this).parent().animate({ width: '140px' }, 500).find('input').focus();
@@ -124,31 +126,32 @@ $(document).ready(function () {
     var is_flag = true;
     var is_flag_a = true;
     //var is_flag_b=true;
-    $("#i-picture-box,div[id*='i-user-box'],#i-picture-box-send").live('click', function (e) {
+    $("#i-picture-box,div[id*='i-user-box'],#i-picture-box-send").live('click', function(e) {
         //if ($(e.target).hasClass('i-pic-close')) {
         //    return;
         //}
         e.stopPropagation();
     });
-    $("#ipclose").click(function (e) {
+    $("#ipclose").click(function(e) {
         $("#i-picture-box").hide();
         is_flag = true;
     });
-    $("#ipcloseSend").click(function (e) {
+    $("#ipcloseSend").click(function(e) {
         $("#i-picture-box-send").hide();
         is_flag = true;
     });
-    $(".i-close").live('click', function (e) {
+    $(".i-close").live('click', function(e) {
         $("div[id*='i-user-box']").hide();
         is_flag_a = true;
     });
-    $(".for-close").live('click', function () {
+    $(".for-close").live('click', function() {
         $("#forwar-box").fadeOut();
     });
-    $(".send-close").live('click', function () {
+    $(".send-close").live('click', function() {
+        $("#send-box_v1").fadeOut();
         $("#send-box").fadeOut();
     });
-    $(document).click(function (e) {
+    $(document).click(function(e) {
 
         var target = $(e.target);
         var targetId = $(e.target).attr('id');
@@ -157,7 +160,7 @@ $(document).ready(function () {
         }
         $("#search_form").find('input').val('');
         $("#search-ico").parent().animate({ width: '27px' }, 500);
-        setTimeout(function () {
+        setTimeout(function() {
             $("#search-ico").parent().css({ backgroundColor: '' });
         }, 400);
         $("#i-picture-box").hide();
@@ -177,49 +180,48 @@ $(document).ready(function () {
         }
 
     });
-    $(".head-fl >ul >li").mouseover(function () {
+    $(".head-fl >ul >li").mouseover(function() {
         $(this).find('i').css('background-position', '0px -20px');
     });
-    $(".head-fl >ul >li").mouseout(function () {
+    $(".head-fl >ul >li").mouseout(function() {
         $(this).find('i').css('background-position', '0px -15px');
     });
-    $(".guide-li").mouseover(function () {
+    $(".guide-li").mouseover(function() {
         $($(this).find('i')[0]).css('background-position', '-12px -12px');
         $($(this).find('i')[1]).css('background-position', '-25px -4px');
     });
-    $(".guide-li").mouseout(function () {
+    $(".guide-li").mouseout(function() {
         $($(this).find('i')[0]).css('background-position', '-12px 0px');
         $($(this).find('i')[1]).css('background-position', '-25px 0px');
     });
-    $(".user-set >ul >li").mouseover(function () {
+    $(".user-set >ul >li").mouseover(function() {
         $(this).find('.i_down').css('background-position', '-25px -4px');
     });
-    $(".user-set >ul >li").mouseout(function () {
+    $(".user-set >ul >li").mouseout(function() {
         $(this).find('.i_down').css('background-position', '-25px 0px');
     });
     //退出菜单
-    $("#user_img").hover(function () {
+    $("#user_img").hover(function() {
         $("#exit_box").show();
     });
-    $("#user_img").mouseleave(function () {
+    $("#user_img").mouseleave(function() {
         $("#exit_box").hide();
     });
 
-    $("#login-wide-close").click(function () {
+    $("#login-wide-close").click(function() {
         $("#login-box").hide();
     });
-    $(window).scroll(function () {
+    $(window).scroll(function() {
         if ($(window).scrollTop() > 500) {
             $("#back-to-top").fadeIn(1500);
-        }
-        else {
+        } else {
             $("#back-to-top").fadeOut(1500);
         }
     });
 
     //当点击跳转链接后，回到页面顶部位置
 
-    $("#back-to-top").click(function () {
+    $("#back-to-top").click(function() {
         $('body,html').animate({ scrollTop: 0 }, 200);
         return false;
     });
@@ -234,7 +236,7 @@ $(document).ready(function () {
     }
 
     //多账户下拉
-    /**** 
+    /****
     $('.js_account_pull').live('mouseover', function () {
         $(this).parents('li,.ul-bj').siblings().find('.js_account_pull').removeClass('hover');
         $(this).addClass('hover');
@@ -245,7 +247,7 @@ $(document).ready(function () {
    ***/
     var ps_timer = account_pull_wrap = pslitStr = "";
     var oTx = oTy = 0;
-    $('.js_account_pull').live('mouseover', function (e) {
+    $('.js_account_pull').live('mouseover', function(e) {
         if ($(this).find('.pull_listbox').length) {
             pslitStr = $(this).find('.pull_listbox').prop('outerHTML');
             clearTimeout(ps_timer);
@@ -263,29 +265,28 @@ $(document).ready(function () {
         }
 
     })
-    $('.js_account_pull').live('mouseout', function () {
-        ps_timer = setTimeout(function () {
+    $('.js_account_pull').live('mouseout', function() {
+        ps_timer = setTimeout(function() {
             $('body .account_pull_wrap').remove();
         }, 300)
     })
-    $('.pull_listbox').live('mouseover', function () {
+    $('.pull_listbox').live('mouseover', function() {
         clearTimeout(ps_timer);
     })
-    $('.pull_listbox').live('mouseout', function () {
-        ps_timer = setTimeout(function () {
+    $('.pull_listbox').live('mouseout', function() {
+        ps_timer = setTimeout(function() {
             $('body .account_pull_wrap').remove();
         }, 300)
     })
-    $('.js_account_pull .account_num_bg_box').live('mouseover,mouseout', function (e) {
+    $('.js_account_pull .account_num_bg_box').live('mouseover,mouseout', function(e) {
         stopBubble(e);
     })
 
     //阻止冒泡
     function stopBubble(e) {
-        if (e && e.stopPropagation) {//非IE浏览器 
+        if (e && e.stopPropagation) { //非IE浏览器
             e.stopPropagation();
-        }
-        else {//IE浏览器 
+        } else { //IE浏览器
             window.event.cancelBubble = true;
         }
     }
@@ -297,8 +298,7 @@ $(document).ready(function () {
 function showUserMenu(obj, isShow) {
     if (isShow) {
         $(obj).show();
-    }
-    else {
+    } else {
         $(obj).hide();
     }
 }
@@ -307,8 +307,7 @@ function setUserAvata(user) {
     var avataPath = '';
     if (user.userType == 2) {
         avataPath = DEFAULT_ROOT + "TraderAvata/" + user.id;
-    }
-    else if (user.userType == 1) {
+    } else if (user.userType == 1) {
         avataPath = DEFAULT_ROOT + "CustomerAvata/" + user.id;
     }
     if (avataPath) {
@@ -326,14 +325,14 @@ function isPositiveDecimal(str) {
             return false;
         }
         return true;
-    }
-    else {
+    } else {
         return false;
     }
 };
+
 function formatMoneyNum(obj) {
     var container = obj ? '#' + obj + ' ' : '';
-    $(container + ".moneyNum").each(function (i, o) {
+    $(container + ".moneyNum").each(function(i, o) {
         var formated = addThousandsComma($(o)[0].innerText)
         $(o)[0].innerText = formated;
     });
@@ -381,16 +380,16 @@ function initValidateCode() {
     //    return;
 
     //$("#img_VCode").attr("src", codeUrl + "?t=" + new Date().getTime());
-    $("#img_VCodeIndex").click(function () {
+    $("#img_VCodeIndex").click(function() {
         $("#img_VCodeIndex").attr("src", codeUrl + "?t=" + new Date().getTime());
     });
-    $("#img_VCode").click(function () {
+    $("#img_VCode").click(function() {
         $("#img_VCode").attr("src", codeUrl + "?t=" + new Date().getTime());
     });
-    $("#change_VCode").click(function () {
+    $("#change_VCode").click(function() {
         $("#img_VCode").attr("src", codeUrl + "?t=" + new Date().getTime());
     });
-    $("#img_VCodeEmail").click(function () {
+    $("#img_VCodeEmail").click(function() {
         $("#img_VCodeEmail").attr("src", codeUrl + "?t=" + new Date().getTime());
     });
 }
@@ -404,9 +403,8 @@ function requiredLogin(callback, param, allowCancel) {
     if (USER_ID == 0) {
         try {
             clientLogin(callback, param);
-        } catch (e) { }
-    }
-    else {
+        } catch (e) {}
+    } else {
         callback(param);
     }
 }
@@ -419,7 +417,7 @@ function clientLogin(callback, param) {
     var account = new Account();
     account.init();
     account.stayPage = true;
-    account.loginCompleted = function (data) {
+    account.loginCompleted = function(data) {
         $("#login-box").hide();
 
         USER_ID = data.LoginInfo.id;
@@ -446,8 +444,7 @@ function clientLogin(callback, param) {
                 NTKF_PARAM.uid = data.LoginInfo.id;
                 NTKF_PARAM.uname = data.LoginInfo.nickName;
             }
-        }
-        catch (e) {
+        } catch (e) {
 
         }
     }
@@ -469,7 +466,7 @@ function userLoginStatus(id, name) {
     var strHtml = '<div class="login_status"><a href="/userpage/{userid}" class="user_msg link_block">' +
         '<img src="/Avata/{userid}/20/20" width="20" height="20" alt=""><span class="userName">{username}</span></a></div>' + '<div class="pull_list_wrap">' +
         '<ul class="alist">' +
-        '<li><a href="/Home"><i class="hear_us_icon us_icon_wdsy"></i>我的首页</a></li>' +
+        '<li><a href="/home"><i class="hear_us_icon us_icon_wdsy"></i>我的首页</a></li>' +
         '<li><a href="/userpage/{userid}"><i class="hear_us_icon us_icon_grzsy"></i>个人展示页</a></li>' +
         '<li><a href="/Account/UserInfo/UserSet"><i class="hear_us_icon us_icon_grsz"></i>个人设置</a></li>' +
         '<li><a href="/logout"><i class="hear_us_icon us_icon_tczh"></i>退出账号</a></li>' +
@@ -502,22 +499,22 @@ function postData(formId, url, submitButtonId, onComplete) {
     var data = $("#" + formId).serialize();
     data = data + "&t=" + ticker();
     $.post(url,
-                data,
-                function (data) {
-                    $("#" + submitButtonId).bind("click", bindEvent);
-                    setTimeout(function () {
-                        $("#" + submitButtonId).removeClass("btn_dis");
-                        //$("#" + submitButtonId).removeAttr("disabled");
-                    }, 2000);
-                    $("#" + submitButtonId).html(text);
-                    //返回值为-200表示服务器内部异常，需要提示！
-                    //if (data.code == -200 && !loadingAnimation) {
-                    //    msg(data.message);
-                    //}
-                    //else {
-                    onComplete(data);
-                    //}
-                });
+        data,
+        function(data) {
+            $("#" + submitButtonId).bind("click", bindEvent);
+            setTimeout(function() {
+                $("#" + submitButtonId).removeClass("btn_dis");
+                //$("#" + submitButtonId).removeAttr("disabled");
+            }, 2000);
+            $("#" + submitButtonId).html(text);
+            //返回值为-200表示服务器内部异常，需要提示！
+            //if (data.code == -200 && !loadingAnimation) {
+            //    msg(data.message);
+            //}
+            //else {
+            onComplete(data);
+            //}
+        });
 }
 
 /*
@@ -535,19 +532,18 @@ function postDataJump(formId, url, submitButtonId, onComplete) {
     var data = $("#" + formId).serialize();
     data = data + "&t=" + ticker();
     $.post(url,
-                data,
-                function (data) {
-                    //$("#" + submitButtonId).removeClass("btn_disabled");
-                    //$("#" + submitButtonId).removeAttr("disabled");
-                    //$("#" + submitButtonId).html(text);
-                    //返回值为-200表示服务器内部异常，需要提示！
-                    if (data.code == -200 && !loadingAnimation) {
-                        msg(data.message);
-                    }
-                    else {
-                        onComplete(data);
-                    }
-                });
+        data,
+        function(data) {
+            //$("#" + submitButtonId).removeClass("btn_disabled");
+            //$("#" + submitButtonId).removeAttr("disabled");
+            //$("#" + submitButtonId).html(text);
+            //返回值为-200表示服务器内部异常，需要提示！
+            if (data.code == -200 && !loadingAnimation) {
+                msg(data.message);
+            } else {
+                onComplete(data);
+            }
+        });
 }
 
 
@@ -570,7 +566,7 @@ function msg(msg, level) {
         boxObj.fadeIn();
         back.fadeIn();
         $("#failure-text").html(msg);
-        $("#failure-true,#failure-true1").click(function () {
+        $("#failure-true,#failure-true1").click(function() {
             $(this).unbind('click');
             back.hide();
             boxObj.hide();
@@ -582,8 +578,7 @@ function msg(msg, level) {
         boxObj.fadeIn();
         back.fadeIn();
         $("#modify-no-text").html(msg);
-    }
-    else if (level === 3) {
+    } else if (level === 3) {
         boxObj = $("#modify-false-box");
         back.append(boxObj);
         boxObj.fadeIn();
@@ -591,7 +586,7 @@ function msg(msg, level) {
         $("#modify-false-text").html(msg);
     }
     if (level != 1) {
-        setTimeout(function () {
+        setTimeout(function() {
             boxObj.hide();
             back.hide();
             enable_scroll();
@@ -615,7 +610,7 @@ function msg(msg, level) {
 
 function confirmBox(msg, fun, data) {
     var back = $("#com_div_box1");
-    $("#confirm_true").click(function () {
+    $("#confirm_true").click(function() {
         fun(data);
         $(this).unbind('click');
         back.hide();
@@ -623,7 +618,7 @@ function confirmBox(msg, fun, data) {
         enable_scroll();
     });
 
-    $("#confirm_cancel,#confirm_cancel1").click(function (e) {
+    $("#confirm_cancel,#confirm_cancel1").click(function(e) {
         $("#confirm_true").unbind('click');
         back.hide();
         $("#confirmBox").hide();
@@ -638,9 +633,9 @@ function confirmBox(msg, fun, data) {
 显示所有星级
 */
 function renderStar() {
-    $("div [star]").each(function (i, o) {
+    $("div [star]").each(function(i, o) {
         var star = $(o).attr("star");
-        $(o).children().each(function (j, l) {
+        $(o).children().each(function(j, l) {
             if (star > j) {
                 $(l).removeClass("star_gray").addClass("star_on");
             }
@@ -664,11 +659,11 @@ function stopAnimation() {
 }
 
 /*
-设置该值为true 则ajax 时显示遮罩动画 
+设置该值为true 则ajax 时显示遮罩动画
 */
 var loadingAnimation = false;
 
-$(document).ajaxSend(function (e, xhr, setting) {
+$(document).ajaxSend(function(e, xhr, setting) {
     if (setting.url.indexOf(sendUrl) != 0 && setting.url.indexOf(USER_ASSOCIATE_URL) != 0 && setting.url.indexOf(USER_GETASSOCIATE_URL) != 0) {
         if (loadingAnimation) {
             showAnimation();
@@ -676,19 +671,19 @@ $(document).ajaxSend(function (e, xhr, setting) {
     }
 });
 
-$(document).ajaxComplete(function (a) {
+$(document).ajaxComplete(function(a) {
     if (loadingAnimation) {
         stopAnimation();
     }
 });
-$(document).ajaxSuccess(function (evt, request, settings) {
+$(document).ajaxSuccess(function(evt, request, settings) {
 
 });
 //$(document).ajaxError(function (event, request, settings) {
 //    if (loadingAnimation) {
 //        stopAnimation();
 //    }
-//    msg(Page_Common_Ajax_Error, 2);   
+//    msg(Page_Common_Ajax_Error, 2);
 //});
 
 
@@ -718,8 +713,7 @@ function isFieldError(id, validateObj) {
                 isError = true;
             }
         }
-    }
-    catch (e) { }
+    } catch (e) {}
 
     return isError;
 }
@@ -737,7 +731,7 @@ function setBtnInvalid(obj, enableClass) {
     obj.attr("disabled", "disabled");
     //obj.css('background', '#b7b9c5');
     obj.unbind("click");
-    var timerId = setInterval(function () {
+    var timerId = setInterval(function() {
         timer = timer - 1;
         obj.html("(" + timer + "秒)后重新发送");
         if (timer <= 0) {
@@ -755,13 +749,13 @@ function setBtnInvalid(obj, enableClass) {
 
 /*所有时间控件的初始化*/
 function loadDateTimePicker() {
-    $(".laydate-icon").each(function (index, el) {
+    $(".laydate-icon").each(function(index, el) {
         var id = $(el).attr('id');
         laydate.skin('molv');
-        $(el).click(function (event) {
+        $(el).click(function(event) {
             laydate({
                 elem: '#' + id,
-                choose: function (datas) {
+                choose: function(datas) {
                     //console.log(datas);
                     if (window['on_search'] != undefined) {
                         window['on_search'](id);
@@ -775,7 +769,7 @@ function loadDateTimePicker() {
 
 /*筛选切换样式改变*/
 function exChange() {
-    $(".screening dl a").click(function () {
+    $(".screening dl a").click(function() {
         $(this).siblings('a').children('dd').removeClass('screening-r');
         $(this).children('dd').addClass('screening-r');
         var type = $(this).attr('toogleType');
@@ -784,7 +778,7 @@ function exChange() {
             window["onTabChange"](type, val);
         }
     });
-    $('.screen_group .radio_box a').click(function () {
+    $('.screen_group .radio_box a').click(function() {
         $(this).addClass('on').siblings().removeClass('on');
         var type = $(this).attr('toogleType');
         var val = $(this).attr('toogleVal');
@@ -796,14 +790,15 @@ function exChange() {
 
 /** Tranding View 下单模块**/
 function exshowHide() {
-    $('.js_showtradingbox .sh_btnbox').click(function () {
+    $('.js_showtradingbox .sh_btnbox').click(function() {
         $(this).parents('.js_showtradingbox').toggleClass('hide');
     })
 }
 
 /*table排序*/
 function tableSort() {
-    $("table.i thead td,table.i thead th").click(function () {
+    $("table.i thead td,table.i thead th").click(function() {
+        if ($(this).parent().parent().parent().hasClass('nosort')) return;
         var feild = $(this).attr('feild');
         var tbodyId = $(this).closest('thead').next('tbody').attr("id");
 
@@ -813,10 +808,10 @@ function tableSort() {
             sortId = '';
             $(this).children('i').attr('class', 'down');
         } else if (sortType === 'down') {
-            sortId = 0;//降序是0
+            sortId = 0; //降序是0
             $(this).children('i').attr('class', 'up');
         } else if (sortType === 'up') {
-            sortId = 1;//升序1
+            sortId = 1; //升序1
             $(this).children('i').attr('class', 'down');
         }
         if (window["onTableSort"] != undefined && feild != '') {
@@ -826,7 +821,7 @@ function tableSort() {
 }
 
 function commonSort() {
-    $(".js_commonSort .js_sort").click(function () {
+    $(".js_commonSort .js_sort").click(function() {
         var feild = $(this).attr('feild');
 
         var sortId, sortType = $(this).children('i').attr('class').trim();
@@ -836,10 +831,10 @@ function commonSort() {
             sortId = '';
             $(this).children('i').attr('class', 'sort_down');
         } else if (sortType === 'sort_down') {
-            sortId = 0;//降序是0
+            sortId = 0; //降序是0
             $(this).children('i').attr('class', 'sort_up');
         } else if (sortType === 'sort_up') {
-            sortId = 1;//升序1
+            sortId = 1; //升序1
             $(this).children('i').attr('class', 'sort_down');
         }
         if (window["onTabChange"] != undefined && feild != '') {
@@ -855,13 +850,12 @@ function commonSort() {
 function getUserAssociate() {
     try {
         if (USER_ID != undefined && USER_ID != 0 && REQUIRED_USER_ASSOCIATE != undefined && REQUIRED_USER_ASSOCIATE === true) {
-            $.post(USER_ASSOCIATE_URL, { 't': ticker() }, function (data) {
+            $.post(USER_ASSOCIATE_URL, { 't': ticker() }, function(data) {
                 USER_ASSOCIATE_OBJECT = data;
                 refreshAssociateLink();
             });
         }
-    } catch (e) {
-    }
+    } catch (e) {}
 }
 
 /*
@@ -898,6 +892,8 @@ function refreshAssociateLink() {
             //var btnlist = $("#btn_list_" + USER_ASSOCIATE_OBJECT.attention[i]);
             if (fAtta != undefined) {
                 fAtta.html("已关注");
+                fAtta.removeClass("btn2");
+                fAtta.addClass("btn1");
                 //btnlist.show();
                 //msgbtn.show();
             }
@@ -914,8 +910,9 @@ function refreshAssociateLink() {
 function attentionUser(userId) {
     requiredLogin(onattention, userId);
 }
+
 function onattention(userId) {
-    $.post("/Social/Blog/AttentionOrNo", { id: userId }, function (data) {
+    $.post("/Social/Blog/AttentionOrNo", { id: userId }, function(data) {
         if (!data && USER_ID == userId) {
             msg("无法关注自己");
         } else {
@@ -928,13 +925,13 @@ function onattention(userId) {
 }
 
 function screening_click() {
-    $(".screening_click").find('select').change(function () {
+    $(".screening_click").find('select').change(function() {
         var id = $(this).attr('id');
         if (window['on_search'] != undefined) {
             window['on_search'](id);
         }
     });
-    $(".screening_click").find("input[class!='laydate-icon']").blur(function () {
+    $(".screening_click").find("input[class!='laydate-icon']").blur(function() {
         var id = $(this).attr('id');
         if (window['on_search'] != undefined) {
             window['on_search'](id);
@@ -944,7 +941,7 @@ function screening_click() {
 
 var HtmlUtil = {
     /*1.用浏览器内部转换器实现html转码*/
-    htmlEncode: function (html) {
+    htmlEncode: function(html) {
         var temp = document.createElement("div");
         (temp.textContent != undefined) ? (temp.textContent = html) : (temp.innerText = html);
         var output = temp.innerHTML;
@@ -952,7 +949,7 @@ var HtmlUtil = {
         return output;
     },
     /*2.用浏览器内部转换器实现html解码*/
-    htmlDecode: function (text) {
+    htmlDecode: function(text) {
         var temp = document.createElement("div");
         temp.innerHTML = text;
         var output = temp.innerText || temp.textContent;
@@ -960,12 +957,12 @@ var HtmlUtil = {
         return output;
     },
     /*去除空格，包括‘&nbsp;’也去除*/
-    textTrim: function (text) {
+    textTrim: function(text) {
         text = text.replace(/&nbsp;/g, "");
         return text.replace(/(^\s*)|(\s*$)/g, "");
     },
     /*截取固定长度字符串，超过部分替换为...*/
-    cutStr: function (str, len) {
+    cutStr: function(str, len) {
         if (str == null || str == "")
             return str;
         var str_length = 0;
@@ -1003,16 +1000,16 @@ var HtmlUtil = {
                 return str_cut;
             }
         }
-        //如果给定字符串小于指定长度，则返回源字符串；  
+        //如果给定字符串小于指定长度，则返回源字符串；
         if (str_length < len) {
             return str;
         }
     },
     //去除HTML标签
-    getBodyTxt: function (body) {
+    getBodyTxt: function(body) {
         if (body) {
             body = body.replace(/<\/?[^>]*>/g, ''); //去除HTML tag
-            body = body.replace(/&nbsp;/ig, '');//去掉&nbsp;
+            body = body.replace(/&nbsp;/ig, ''); //去掉&nbsp;
         }
         return body;
     }
@@ -1022,11 +1019,10 @@ var HtmlUtil = {
 function GetAttAndFansCount(userid, onCallback) {
     var returnUrl = '/Social/Attention/GetAttAndFansCount';
     $.post(
-            returnUrl,
-            { userId: userid },
-            function (data) {
-                onCallback(data);
-            }
+        returnUrl, { userId: userid },
+        function(data) {
+            onCallback(data);
+        }
     );
 }
 
@@ -1034,11 +1030,11 @@ function jsonpCallback(data) {
     //console.log(data);
 
 }
-var errorCount = 0;//消息请求错误次数
+var errorCount = 0; //消息请求错误次数
 //消息提醒
 function getLatestMessage() {
     //定时查询用户是否登录，是否存在,如果不存在则不查询消息，否则查询实时消息
-    if (USER_ID === undefined || USER_ID === 0) {
+    if (typeof USER_ID === 'undefined' || USER_ID === 0) {
         //$("#messageBell").addClass("i_bell_dot");
     } else {
         // var returnUrl = "/SocialRemind/" + USER_ID + "/" + ticker();
@@ -1049,7 +1045,7 @@ function getLatestMessage() {
             $.ajax({
                 dataType: 'jsonp',
                 url: returnUrl,
-                success: function (data) {
+                success: function(data) {
                     try {
                         if (data != null) {
                             var counter = 0; //消息计数器
@@ -1060,43 +1056,49 @@ function getLatestMessage() {
                             $("#remindMessageBox").children().hide();
                             $("#messageBell").removeClass("msg_new");
                             $("#remindMessageBox").hide();
-                            if (typeof (data) == 'string')
+                            if (typeof(data) == 'string')
                                 data = JSON.parse(data);
                             if (data.c > 0) {
-                                $("#Comment_Menu").parent().append('<span class="user-nav-prompt" id="Comment_Menu_count">' + data.c + '</span>');
+                                // $("#Comment_Menu").parent().append('<span class="user-nav-prompt" id="Comment_Menu_count">' + data.c + '</span>');
                                 $("#newCommon").show();
                                 $("#newCommonCount").html(data.c);
+                                $("#newCommentMsgMenu").trigger('change', [data.c]); //菜单栏新增的评论数量
                                 counter++;
                             }
                             if (data.a > 0) {
-                                $("#At_Menu").parent().append('<span class="user-nav-prompt" id="At_Menu_count">' + data.a + '</span>');
-                                $("#At_Menu").parent().parent().attr('href', '/Social/Home/AtMeBlog?tab=1&count=' + data.t);
+                                // $("#At_Menu").parent().append('<span class="user-nav-prompt" id="At_Menu_count">' + data.a + '</span>');
+                                // $("#At_Menu").parent().parent().attr('href', '/Social/Home/AtMeBlog?tab=1&count=' + data.t);
                                 $("#newAT").show();
                                 $("#newATCount").html(data.a);
+                                $("#newAtmeMsgMenu").trigger('change', [data.a]); //菜单栏新增的提到我的数量
+
                                 counter++;
-                                if (data.t > 0 && data.b === 0) {
-                                    $("#newAT").find('a').attr('href', '/Social/Home/AtMeBlog?tab=2');
-                                } else if (data.t === 0 && data.b > 0) {
-                                    $("#newAT").find('a').attr('href', '/Social/Home/AtMeBlog');
-                                } else {
-                                    $("#newAT").find('a').attr('href', '/Social/Home/AtMeBlog?tab=1&count=' + data.t);
-                                }
+                                $("#newAT").find('a').attr('href', '/social/atmeblog');
+                                // if (data.t > 0 && data.b === 0) {
+                                //     $("#newAT").find('a').attr('href', '/Social/Home/AtMeBlog?tab=2');
+                                // } else if (data.t === 0 && data.b > 0) {
+                                //     $("#newAT").find('a').attr('href', '/Social/Home/AtMeBlog');
+                                // } else {
+                                //     $("#newAT").find('a').attr('href', '/Social/Home/AtMeBlog?tab=1&count=' + data.t);
+                                // }
                             }
                             if (data.f > 0) {
-                                $("#MyFans_Menu").parent().append('<span class="user-nav-prompt" id="MyFans_Menu_count">' + data.f + '</span>');//显示新增的数目
+                                // $("#MyFans_Menu").parent().append('<span class="user-nav-prompt" id="MyFans_Menu_count">' + data.f + '</span>'); //显示新增的数目
                                 //刷新粉丝总数
-                                GetAttAndFansCount(0, function (data) {
-                                    $("#MyFans_Menu").text('（' + data.fancount + '）');
+                                GetAttAndFansCount(0, function(response) {
+                                    $("#myFansMenu").text(response.fancount).trigger('change', [data.f]);
                                 });
+                                //新增的粉丝数量
                                 $("#newfans").show();
                                 $("#newfansCount").html(data.f);
                                 counter++;
                             }
                             //私信消息
                             if (data.m > 0) {
-                                $("#Msg_Menu").parent().append('<span class="user-nav-prompt" style="font-size:12px;" id="Private_Msg_count">' + data.m + '</span>');//导航上显示新增的数目
+                                //$("#Msg_Menu").parent().append('<span class="user-nav-prompt" style="font-size:12px;" id="Private_Msg_count">' + data.m + '</span>'); //导航上显示新增的数目
                                 $("#newPrivateMsg").show();
                                 $("#newMsgCount").html(data.m);
+                                $("#newPrivateMsgMenu").trigger('change', [data.m]); //菜单栏新增的私信数量
                                 counter++;
                             }
 
@@ -1109,21 +1111,20 @@ function getLatestMessage() {
                                         if (counter > msgNums) musicPlay('newMsg');
                                     }
                                     localStorage.setItem("U_NewMsgCount", counter);
-                                } catch (e) { }
+                                } catch (e) {}
 
                                 $("#messageBell").addClass("msg_new");
                                 $("#remindMessageBox").show();
                             } else {
                                 try {
                                     localStorage.removeItem("U_NewMsgCount");
-                                } catch (e) { }
+                                } catch (e) {}
                             }
                         }
-                    } catch (e) {
-                    }
+                    } catch (e) {}
                 },
                 timeout: 3000,
-                error: function () {
+                error: function() {
                     console.log("服务器远程连接失败。。。");
                     errorCount++;
                 }
@@ -1208,8 +1209,7 @@ function Num2K(num) {
     var numResult = "";
     if (pareFloat(num) > 1000 || pareFloat(num) < -1000) {
         numResult = (pareFloat(num) / param).toFixed(2) + "K";
-    }
-    else {
+    } else {
         numResult = pareFloat(num).toFixed(2);
     }
     return num;
@@ -1219,20 +1219,19 @@ function Num2K(num) {
 function BrokerIdTitle(brokerid) {
     var result = "";
     switch (brokerid) {
-        default:
-            result = "";
-            break;
+        default: result = "";
+        break;
         case 1:
-            result = "关联晋峰环球国际经纪商账户";
+                result = "关联晋峰环球国际经纪商账户";
             break;
         case 2:
-            result = "关联晋峰金银业经纪商账户";
+                result = "关联晋峰金银业经纪商账户";
             break;
         case 4:
-            result = "关联FXCM经纪商账户";
+                result = "关联FXCM经纪商账户";
             break;
         case 5:
-            result = "关联KVB经纪商账户";
+                result = "关联KVB经纪商账户";
             break;
     }
     return result;
@@ -1241,9 +1240,11 @@ function BrokerIdTitle(brokerid) {
 
 //全局的一个评论位置
 var comitPosition = 0;
+
 function getPosition() {
     comitPosition = $(document).scrollTop();
 }
+
 function setPosition() {
     $(document).scrollTop(comitPosition);
 }
@@ -1307,7 +1308,7 @@ function enable_scroll() {
 //禁用滚动事件end
 
 //设置底部固定在最底下
-$(function () {
+$(function() {
     function setFixedFooter() {
         if (getOs() == "Firefox") {
             var minHeight = $(window).height() - 46;
@@ -1317,6 +1318,7 @@ $(function () {
 
         $('.wrapper').css("min-height", minHeight + 'px');
     }
+
     function getOs() {
         var OsObject = "";
         if (navigator.userAgent.indexOf("MSIE") > 0) {
@@ -1336,7 +1338,7 @@ $(function () {
         }
 
     }
-    $(window).resize(function () {
+    $(window).resize(function() {
         setFixedFooter();
     })
     setFixedFooter();
@@ -1344,10 +1346,10 @@ $(function () {
 })
 
 /**表格点击当行变色**/
-$(function () {
+$(function() {
 
 
-    $('table.tr_Diff>tbody').delegate('tr', 'click', function (e) {
+    $('table.tr_Diff>tbody').delegate('tr', 'click', function(e) {
         if (e.target.nodeName != 'TD') {
             return;
         }
@@ -1361,7 +1363,7 @@ $(function () {
 })
 
 
-var audio;//聲音對象
+var audio; //聲音對象
 //傳入指定聲音格式，發出聲音
 function musicPlay(type) {
     if (audio == null || audio == undefined && audio.canPlayType) {
@@ -1380,4 +1382,47 @@ function GetUrlQuery(name) {
     if (r != null) return decodeURI(r[2]);
 
     return null;
+}
+
+//锁定点击事件
+function setlock(obj) {
+    setlockupbox = webAlert({
+        title: false,
+        padding: 0,
+        content: $('#setlockupbox')[0]
+    });
+    window.onresize = function() {
+        setlockupbox.position("50%", "50%");
+    };
+}
+$(function() {
+    $('#js_setlockupbox_close').click(function() {
+        setlockupbox.close()
+    });
+})
+
+
+// recover html varable value
+var logined = USER_ID > 0;
+var elem = $(".login_success");
+elem.each(function(index) {
+    var e = $(this);
+    var html = e.html();
+    html = html.replace(/{USER_ID}/g, USER_ID);
+    html = html.replace(/{ACCOUNT_INDEX}/g, ACCOUNT_INDEX);
+    e.html(html);
+});
+
+$('[x-src]').each(function(index) {
+    var e = $(this);
+    var src = e.attr('x-src');
+    e.attr('src', src);
+});
+
+if (logined) {
+    $(".never_login").remove();
+    elem.show();
+} else {
+    elem.remove();
+    $(".never_login").show();
 }

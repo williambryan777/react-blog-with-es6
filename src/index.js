@@ -1,6 +1,7 @@
 ﻿import React from 'react';
 import ReactDOM from 'react-dom';
-import BlogBox from './BlogBox'
+// import {BlogBox} from './components'
+import BlogBox from './components/Blog/BlogBox.jsx'
 import $ from 'jquery'
 
 // window.fetch('/data/blogs.json').then(response=>{
@@ -12,7 +13,7 @@ import $ from 'jquery'
 
 $.getJSON('/data/blogs.json',function(response){
     let initList = response.list.Items;
-    ReactDOM.render(<BlogBox initBlogs={initList} />, document.getElementById('root'));
+    ReactDOM.render(<BlogBox blogList={initList} />, document.getElementById('root'));
 })
 
 
