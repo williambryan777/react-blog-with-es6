@@ -4,7 +4,9 @@
   "description": "Boilerplate for ReactJS project with hot code reloading",
   "scripts": {
     "start": "node server.js ",
-    "lint": "eslint src"
+    "lint": "eslint src/**/*.jsx",
+    "lint-html": "eslint **/*.jsx  -f html -o ./reports/lint-results.html",
+    "lint-fix": "eslint --fix **/*.jsx"
   },
   "repository": {
     "type": "git",
@@ -32,13 +34,16 @@
   "homepage": "https://github.com/williambryan777/react-blog-with-es6",
   "devDependencies": {
     "babel-core": "^6.0.20",
-    "babel-eslint": "^4.1.3",
+    "babel-eslint": "^7.1.1",
     "babel-loader": "^6.0.1",
     "babel-preset-es2015": "^6.0.15",
     "babel-preset-react": "^6.0.15",
     "babel-preset-stage-0": "^6.0.15",
-    "eslint": "^1.10.3",
-    "eslint-plugin-react": "^3.6.2",
+    "eslint": "^3.13.0",
+    "eslint-config-airbnb": "latest",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^3.0.2",
+    "eslint-plugin-react": "^6.9.0",
     "react-hot-loader": "^1.3.0",
     "webpack": "^1.12.2",
     "webpack-dev-server": "^1.12.1"
